@@ -86,6 +86,8 @@ $ cat intermediate/certs/intermediate.cert.pem certs/ca.cert.pem > intermediate/
 $ chmod 444 intermediate/certs/ca-chain.cert.pem
 ```
 
+## Issuing a new Server Certificate
+
 Generate the key for your application:
 
 ```
@@ -110,3 +112,26 @@ To test the new certificate, run these commands:
 $ openssl x509 -noout -text -in intermediate/certs/wildcard.webapp.com.cert.pem
 $ openssl verify -CAfile intermediate/certs/ca-chain.cert.pem intermediate/certs/wildcard.webapp.com.cert.pem
 ```
+
+## Generating the Certificate Revocation List
+
+To generate the Certificate Revocation List (CRL), run the following command:
+
+```
+$ openssl ca -config intermediate/openssl.cnf -gencrl -out intermediate/crl/intermediate.crl.pem
+```
+
+Them put the crl file in the appropriate end point, according to your config.
+Note that the certificates carry with them the information about this crl
+end point, so if you issued any certificate without this information and added
+it later to your config, the verification won't happen for the old certificates.
+
+The CRL file has to be regenerated each time a certificate is revocated and
+it's expected to be updated regularly (see `default_crl_days` in the config file).
+
+To check the contents of a CRL, one could run the following command:
+
+```
+$ openssl crl -in intermediate/crl/intermediate.crl.pem -noout -text
+```
+
