@@ -17,7 +17,7 @@ $ touch index.txt
 $ echo 1000 > serial
 ```
 
-Prepare the root configuration file (see config.conf file in the root of this repo)
+Prepare the root configuration file (see openssl.cnf file in the root of this repo)
 
 Generate the root CA key:
 
@@ -50,7 +50,7 @@ $ echo 1000 > intermediate/serial
 $ echo 1000 > intermediate/crlnumber
 ```
 
-Prepare the intermediate configuration file (see intermediate/config.conf in this repo)
+Prepare the intermediate configuration file (see intermediate/openssl.cnf in this repo)
 
 Generate the intermediate CA key:
 
